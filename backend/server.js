@@ -1,8 +1,15 @@
 require('dotenv').config({ path: './.env' });
 const express = require('express');
 const connectDB = require('./config/db');
-
+const cors = require("cors");
 const app = express();
+// ✅ CORS FIRST
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+    })
+)
 
 // middleware to parse JSON
 app.use(express.json());
