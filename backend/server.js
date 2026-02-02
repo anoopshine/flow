@@ -49,7 +49,9 @@ app.post("/api/test/post", (req, res) => {
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/categories", categoryRoutes);
