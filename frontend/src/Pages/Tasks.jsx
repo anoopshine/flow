@@ -3,7 +3,7 @@ import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
 export default function Tasks() {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     const [tasks, setTasks] = useState([]);
     const [title, setTitle] = useState("");
@@ -13,13 +13,10 @@ export default function Tasks() {
     // 🔄 Fetch tasks
     const fetchTasks = async () => {
         try {
-            const token = localStorage.getItem("token");
-
             setLoading(true);
             const res = await api.get(
                 "/tasks",
             );
-            console.log(res.data, 'hey ak');
             setTasks(res.data.tasks);
         } catch (err) {
             setError("Failed to load tasks");
@@ -65,7 +62,10 @@ export default function Tasks() {
 
     return (
         <div style={styles.container}>
-            <h2>Welcome, {user?.name}</h2>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h2>Welcome, {user?.name}</h2>
+                <button onClick={logout}>Logout</button>
+            </div>
 
             <form onSubmit={createTask} style={styles.form}>
                 <input

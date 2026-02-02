@@ -6,6 +6,12 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const logout = () => {
+        localStorage.removeItem("token");
+        setUser(null);
+        window.location.href = "/login";
+    };
+
     useEffect(() => {
         const token = localStorage.getItem("token");
 
@@ -14,17 +20,21 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
-        api.get("/auth/profile")
-            .then(res => setUser(res.data.user))
-            .catch(() => localStorage.removeItem("token"))
+        api
+            .get("/auth/profile")
+            .then((res) => setUser(res.data.user))
+            .catch(() => logout())
             .finally(() => setLoading(false));
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, setUser, loading }}>
+        <AuthContext.Provider
+            value={{ user, setUser, logout, loading }}
+        >
             {children}
         </AuthContext.Provider>
     );
 };
+
 
 export const useAuth = () => useContext(AuthContext);
