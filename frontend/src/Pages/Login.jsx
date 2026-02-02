@@ -22,7 +22,6 @@ export default function Login() {
                 "/auth/login",
                 { email, password }
             );
-            console.log(res.data, 'hey ak');
 
             const { token, user } = res.data;
 
@@ -32,7 +31,6 @@ export default function Login() {
             // set auth user
             setUser(user);
 
-            console.log(user, 'hey ak');
             // redirect
             navigate("/tasks");
         } catch (err) {
